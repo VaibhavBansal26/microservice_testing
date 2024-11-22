@@ -32,7 +32,7 @@ services:
       - kafka-net
 
   flask:
-    image: vaibhavbansal26/my-backend
+    image: vaibhavbansal26/my-ds-backend
     environment:
       DB_HOST: db
       DB_NAME: salary_db
