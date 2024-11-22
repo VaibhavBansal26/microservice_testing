@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: salary_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kafka-net
+  
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kafka-net
+
+  flask:
+    image: vaibhavbansal26/my-backend
+    environment:
+      DB_HOST: db
+      DB_NAME: salary_db
+      DB_USER: postgres
+      DB_PASSWORD: admin
+    depends_on:
+      - db
+    ports:
+      - "5001:5000"
+    command: flask run --host=0.0.0.0 --port=5000
+    networks:
+      - kafka-net
+
+networks:
+  kafka-net:
+    driver: bridge
+
+volumes:
+  pgdata:
+  jobs:
+  logs:
+  shared:
+  spark:
