@@ -19,3 +19,4 @@ flask-sqlalchemy
 psycopg2-binary
 kafka-python
 pycountry
+gunicorn

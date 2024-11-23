@@ -10,6 +10,10 @@ import joblib
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app)
+# CORS(app, resources={r"/*": {"origins": [
+#     "https://datascience-salary-vb.web.app",
+#     "http://localhost:3000" 
+# ]}})
 
 # Database configuration
 db_host = os.getenv("DB_HOST", "db")
